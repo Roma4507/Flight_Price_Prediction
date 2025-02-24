@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Flight Price Predictor</title>
+    <style>
+        body {
+            margin: 0;
+            padding: 0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(to right, #83a4d4, #b6fbff);
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .container {
+            background: #ffffff;
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 8px 30px rgba(0, 0, 0, 0.2);
+            width: 600px;
+            position: relative;
+        }
+
+        h1 {
+            text-align: center;
+            color: #007bff;
+            margin-bottom: 20px;
+        }
+
+        form {
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
+            gap: 20px;
+        }
+
+        label {
+            font-weight: bold;
+            display: block;
+            margin-bottom: 5px;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 10px;
+            border-radius: 8px;
+            border: 1px solid #ccc;
+            margin-bottom: 15px;
+        }
+
+        button {
+            grid-column: span 2;
+            padding: 15px;
+            background: linear-gradient(to right, #007bff, #00d4ff);
+            color: white;
+            border: none;
+            border-radius: 10px;
+            cursor: pointer;
+            font-size: 16px;
+            font-weight: bold;
+            transition: background 0.3s ease;
+        }
+
+        button:hover {
+            background: linear-gradient(to right, #0056b3, #0083b0);
+        }
+
+        .result {
+            margin-top: 20px;
+            text-align: center;
+            font-size: 24px;
+            color: #28a745;
+        }
+
+        /* Decorative plane icons */
+        .plane {
+            position: absolute;
+            width: 100px;
+            opacity: 0.3;
+        }
+
+        .plane-left {
+            top: -40px;
+            left: -40px;
+            transform: rotate(-30deg);
+        }
+
+        .plane-right {
+            bottom: -40px;
+            right: -40px;
+            transform: rotate(30deg);
+        }
+
+        /* Responsive Design */
+        @media (max-width: 768px) {
+            .container {
+                width: 90%;
+            }
+
+            form {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+<!-- Decorative Plane Icons -->
+<img src="https://cdn-icons-png.flaticon.com/512/3119/3119183.png" alt="Plane Left" class="plane plane-left">
+<img src="https://cdn-icons-png.flaticon.com/512/3119/3119183.png" alt="Plane Right" class="plane plane-right">
+
+<div class="container">
+    <h1>Flight Price Prediction</h1>
+    <form action="/predict" method="post">
+        <div>
+            <label>Departure Time:</label>
+            <input type="datetime-local" name="Dep_Time" required>
+        </div>
+
+        <div>
+            <label>Arrival Time:</label>
+            <input type="datetime-local" name="Arrival_Time" required>
+        </div>
+
+        <div>
+            <label>Total Stops:</label>
+            <select name="stops">
+                <option value="0">Non-Stop</option>
+                <option value="1">1 Stop</option>
+                <option value="2">2 Stops</option>
+                <option value="3">3 Stops</option>
+                <option value="4">4 Stops</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Airline:</label>
+            <select name="airline">
+                <option value="Jet Airways">Jet Airways</option>
+                <option value="IndiGo">IndiGo</option>
+                <option value="Air India">Air India</option>
+                <option value="Multiple carriers">Multiple carriers</option>
+                <option value="SpiceJet">SpiceJet</option>
+                <option value="Vistara">Vistara</option>
+                <option value="GoAir">GoAir</option>
+                <option value="Multiple carriers Premium economy">Multiple carriers Premium economy</option>
+                <option value="Jet Airways Business">Jet Airways Business</option>
+                <option value="Vistara Premium economy">Vistara Premium economy</option>
+                <option value="Trujet">Trujet</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Source:</label>
+            <select name="Source">
+                <option value="Delhi">Delhi</option>
+                <option value="Kolkata">Kolkata</option>
+                <option value="Mumbai">Mumbai</option>
+                <option value="Chennai">Chennai</option>
+            </select>
+        </div>
+
+        <div>
+            <label>Destination:</label>
+            <select name="Destination">
+                <option value="Cochin">Cochin</option>
+                <option value="Delhi">Delhi</option>
+                <option value="New_Delhi">New Delhi</option>
+                <option value="Hyderabad">Hyderabad</option>
+                <option value="Kolkata">Kolkata</option>
+            </select>
+        </div>
+
+        <button type="submit">Predict Flight Price</button>
+    </form>
+
+    {% if prediction_text %}
+        <div class="result">{{ prediction_text }}</div>
+    {% endif %}
+</div>
+
+</body>
+</html>
